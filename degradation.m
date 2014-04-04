@@ -3,7 +3,8 @@
 %    
 %   D = DEGRADATION(TIME_MESH, TEMPERATURE,dt) returns a final degradation
 %   degree Ddeg given a temperature history and a time mesh. temperature is
-%   a 1D-array in Kelvin, time mesh is a 1D Array.
+%   a 1D-array (or 2D-Array) in Kelvin, where each line is the
+%   temperature(s) at different time. time mesh is a 1D Array.
 %    
 %   Ddeg = DEGRADATION(TIME_MESH, TEMPERATURE, dt, Ddeg_init) same as above
 %   except that an initial degree of degreadation already exists.
@@ -14,10 +15,10 @@ function [tspan, Deg] = degradation(time_mesh, temperature, Ddeg_init)
 t_f = time_mesh(end);
 
 if (nargin==2)
-    Ddeg_init = 0;
+    Ddeg_init = zeros(1,size(temperature,2));
 end
 
-assert(length(time_mesh) == length(temperature),...
+assert(length(time_mesh) == size(temperature,1),...
     'your time_mesh and temperature discretization are not the same');
 
 % we will solve the Nam & Seferis evolution equation:
@@ -25,16 +26,15 @@ assert(length(time_mesh) == length(temperature),...
 y1 = 0.0215;
 y2 = 0.9785;
 
-% this is a fuunction that return the temperature given a time
-fun_T = @(t) interp1(time_mesh, temperature, t)';
+% this is a function that return the temperature given a time
+fun_T = @(t) interp1(time_mesh, temperature, t);
 
 %right hand side
 RHS = @(t,Deg) ...
-    K(fun_T(t)) .* ( y1*(1-Deg) + y2*Deg.*(1-Deg) );
+    K(fun_T(t))' .* ( y1*(1-Deg) + y2*Deg.*(1-Deg) );
 
 %% solving the evolution equation using RK4 method:
 options = odeset(...
-    'Vectorized', 'on',... %RHS(R[in]) does not depend on R[in-1] nor R[in+1]
     'NonNegative', 1);
 [tspan, Deg] = ode45(RHS, [0, t_f], Ddeg_init, options);
 
