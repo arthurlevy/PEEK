@@ -6,26 +6,8 @@
 %
 %   [mu, sensib] = VISCOSITY(T) also returns the sensibility to temperature
 %   d(mu)/d(T). useful for non-linear solving.
-%
-% See also : COUPLED_PB, CONSOLSUB_FREE, CONSOLSUB_GIVEN_PRESSURE
 
 
-%This file is part of ATP Simulation.
-%
-%    ATP Simulation is free software: you can redistribute it and/or modify
-%    it under the terms of the GNU General Public License as published by
-%    the Free Software Foundation, either version 3 of the License, or
-%    (at your option) any later version.
-%
-%    ATP Simulation is distributed in the hope that it will be useful,
-%    but WITHOUT ANY WARRANTY; without even the implied warranty of
-%    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-%    GNU General Public License for more details.
-%
-%    You should have received a copy of the GNU General Public License
-%    along with ATP Simulation.  If not, see <http://www.gnu.org/licenses/>.
-%
-% Copyright 2012 Arthur Levy
 function [mu, sensib] = viscosity(T)
 
 
