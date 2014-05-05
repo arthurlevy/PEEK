@@ -10,7 +10,7 @@
 function [ xmesh, ymesh, a, Ns ] = map_orientation_tensor( configuration )
 
 %% MESH
-nx = 20;
+nx = 100;
 ny = nx;
 xmax = max(configuration(:,1));
 xmesh = linspace(0,xmax, nx);
