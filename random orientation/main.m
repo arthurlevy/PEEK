@@ -3,6 +3,7 @@ configuration = random_distribution;
 
 %% get orientation tensor
 [ xmesh, ymesh, a, Ns ] = map_orientation_tensor( configuration );
+clear DA;
 
 for i=1:length(xmesh)
 	for j = 1:length(ymesh)
