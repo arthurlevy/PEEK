@@ -31,8 +31,8 @@ for i=1:size(configuration,1)
     curr_theta = configuration(i,3);
 
     % get the index of the position of the strand in the mesh
-    ind_x = find(curr_x <= xmesh, 1, 'first')-1;
-    ind_y = find(curr_y <= ymesh, 1, 'first')-1;
+    ind_x = find(curr_x <= xmesh, 1, 'first');
+    ind_y = find(curr_y <= ymesh, 1, 'first');
 
     % a at this position should be updated
     a(:,:,ind_x,ind_y) = update_orientation_tensor(...
@@ -54,6 +54,7 @@ surf (   xmesh,   ymesh,    squeeze( a(1,1,:,:) )'      );
 xlabel('x position');
 ylabel('y position');
 zlabel('Orientation tensor, xx coordinate');
+figure
 
 end
 
